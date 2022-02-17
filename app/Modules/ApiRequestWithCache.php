@@ -5,7 +5,6 @@ namespace App\Modules;
 use App\Modules\Exceptions\GetRequestException;
 use Exception;
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Facades\Cache;
 
 /**

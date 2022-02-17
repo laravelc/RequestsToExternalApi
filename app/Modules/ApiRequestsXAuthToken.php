@@ -15,6 +15,11 @@ class ApiRequestsXAuthToken
     private Client $client;
 
     /**
+     * @var string $token Токен
+     */
+    private string $token;
+
+    /**
      * Конструктор
      *
      * @param Client $client
@@ -22,6 +27,7 @@ class ApiRequestsXAuthToken
     public function __construct(Client $client)
     {
         $this->client = $client;
+        $this->token = config('app.token');
     }
 
     /**
@@ -32,7 +38,7 @@ class ApiRequestsXAuthToken
      * @param array $data
      * @return array|mixed|null
      */
-    private function sendRequest(string $url, string $method, array $data): mixed
+    public function send(string $url, string $method, array $data): mixed
     {
         $data = [
             'request' => $data,
@@ -40,7 +46,7 @@ class ApiRequestsXAuthToken
 
         $response = null;
         try {
-            $data['headers'] = ['X-Auth-Token' => $this->getToken()];
+            $data['headers'] = ['X-Auth-Token' => $this->token];
 
             $result = $this->client->$method($url, $data);
             $response = json_decode($result->getBody(), true) ?? [];
